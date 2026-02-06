@@ -134,8 +134,9 @@
         /* Viewport animations */
         .viewport-animate {
             opacity: 0;
-            transform: translateY(var(--space-10));
-            transition: opacity var(--transition-slow) ease, transform var(--transition-slow) ease;
+            transform: translateY(16px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+            will-change: opacity, transform;
         }
 
         .viewport-animate.in-view {
@@ -145,8 +146,9 @@
 
         .viewport-animate-left {
             opacity: 0;
-            transform: translateX(calc(var(--space-10) * -1));
-            transition: opacity var(--transition-slow) ease, transform var(--transition-slow) ease;
+            transform: translateX(-16px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+            will-change: opacity, transform;
         }
 
         .viewport-animate-left.in-view {
@@ -156,8 +158,9 @@
 
         .viewport-animate-right {
             opacity: 0;
-            transform: translateX(var(--space-10));
-            transition: opacity var(--transition-slow) ease, transform var(--transition-slow) ease;
+            transform: translateX(16px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+            will-change: opacity, transform;
         }
 
         .viewport-animate-right.in-view {
@@ -167,13 +170,25 @@
 
         .viewport-animate-scale {
             opacity: 0;
-            transform: scale(0.95);
-            transition: opacity var(--transition-slow) ease, transform var(--transition-slow) ease;
+            transform: scale(0.97);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+            will-change: opacity, transform;
         }
 
         .viewport-animate-scale.in-view {
             opacity: 1;
             transform: scale(1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .viewport-animate,
+            .viewport-animate-left,
+            .viewport-animate-right,
+            .viewport-animate-scale {
+                transition: none;
+                transform: none;
+                opacity: 1;
+            }
         }
 
         /* Navigation */
