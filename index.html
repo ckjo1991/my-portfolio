@@ -94,6 +94,10 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        html, body {
+            background: var(--bg-light);
+        }
+
         .page {
             min-height: 100vh;
             display: none;
@@ -287,7 +291,7 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: calc(100vh - 96px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -334,11 +338,6 @@
             }
         }
 
-        /* Section Divider */
-        .section-divider {
-            height: 300px;
-            background: var(--bg-dark);
-        }
 
         /* Section Title */
         .section-title {
@@ -604,7 +603,7 @@
 
         /* Contact Section */
         .contact-section {
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -798,7 +797,6 @@
             </div>
         </section>
 
-        <div class="section-divider"></div>
 
         <section id="work" class="work-section">
             <h2 class="section-title viewport-animate">Selected Work</h2>
