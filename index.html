@@ -144,6 +144,19 @@
             transform: translateY(0);
         }
 
+        /* Staggered reveal for grouped items */
+        .work-card.viewport-animate.in-view {
+            transition-delay: 0ms;
+        }
+
+        .work-card:nth-child(2).viewport-animate.in-view {
+            transition-delay: 80ms;
+        }
+
+        .work-card:nth-child(3).viewport-animate.in-view {
+            transition-delay: 160ms;
+        }
+
         .viewport-animate-left {
             opacity: 0;
             transform: translateX(-16px);
@@ -779,6 +792,21 @@
             border-radius: var(--radius-lg);
             background: var(--gray-100);
             transition: all var(--transition-base);
+        }
+
+        .problem-card.viewport-animate.in-view,
+        .goal-card.viewport-animate.in-view {
+            transition-delay: 60ms;
+        }
+
+        .problem-card:nth-child(2).viewport-animate.in-view,
+        .goal-card:nth-child(2).viewport-animate.in-view {
+            transition-delay: 120ms;
+        }
+
+        .problem-card:nth-child(3).viewport-animate.in-view,
+        .goal-card:nth-child(3).viewport-animate.in-view {
+            transition-delay: 180ms;
         }
 
         .problem-card h3,
