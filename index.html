@@ -112,11 +112,28 @@
 
         .page {
             min-height: 100vh;
-            display: block;
         }
 
-        .page:not(.active) {
-            display: none;
+        @media (min-width: 769px) {
+            .page {
+                display: none;
+            }
+
+            .page.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Only Home page is visible on mobile by default */
+            .page {
+                display: none;
+                min-height: auto;
+            }
+
+            #home {
+                display: block;
+            }
         }
 
         @keyframes pageEnter {
@@ -1010,14 +1027,27 @@
     .hamburger {
         display: block;
     }
+}
 
-    .page {
-        display: block;
+/* --- MOBILE HERO HEIGHT OVERRIDE --- */
+@media (max-width: 768px) {
+    .hero {
         min-height: auto;
+        padding-top: 120px;
+    }
+}
+
+/* --- DISABLE SCROLL SNAP ON MOBILE --- */
+@media (max-width: 768px) {
+    html {
+        scroll-snap-type: none;
     }
 
-    .page:not(.active) {
-        display: block;
+    .hero,
+    .work-section,
+    .story-section,
+    .contact-section {
+        scroll-snap-align: unset;
     }
 }
     </style>
@@ -1227,6 +1257,13 @@
         document.addEventListener('DOMContentLoaded', observeElements);
 
         function showPage(pageId) {
+            if (window.innerWidth <= 768) {
+                if (pageId === 'home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                return;
+            }
+
             const current = document.querySelector('.page.active');
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             const next = document.getElementById(pageId);
