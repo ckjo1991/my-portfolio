@@ -957,6 +957,61 @@
                 padding: var(--space-24) var(--space-12);
             }
         }
+        /* ---------- Mobile Navigation ---------- */
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-light);
+    margin: 6px 0;
+    transition: all var(--transition-base);
+}
+
+/* Mobile menu overlay */
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-light);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-8);
+    z-index: 1050;
+}
+
+.mobile-menu a {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-light);
+}
+
+/* Active state */
+.mobile-menu.active {
+    display: flex;
+}
+
+/* Mobile breakpoints */
+@media (max-width: 768px) {
+    .nav-links,
+    nav .cta-button {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
     </style>
 </head>
 <body>
@@ -971,7 +1026,19 @@
             <li><a href="#" onclick="showPage('about')">About</a></li>
         </ul>
         <a href="#contact" class="cta-button" onclick="showPage('home'); setTimeout(() => document.getElementById('contact').scrollIntoView({behavior: 'smooth'}), 100)">Get In Touch</a>
+        <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
+
+    <div id="mobileMenu" class="mobile-menu">
+        <a href="#" onclick="closeMobileMenu(); showPage('home')">Home</a>
+        <a href="#" onclick="closeMobileMenu(); showPage('projects')">Projects</a>
+        <a href="#" onclick="closeMobileMenu(); showPage('about')">About</a>
+        <a href="#contact" onclick="closeMobileMenu(); showPage('home'); setTimeout(() => document.getElementById('contact').scrollIntoView({behavior: 'smooth'}), 100)">Get In Touch</a>
+    </div>
 
     <div id="home" class="page active">
         <section class="hero">
@@ -1141,15 +1208,26 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
         function observeElements() {
-            document.querySelectorAll('.viewport-animate, .viewport-animate-left, .viewport-animate-right, .viewport-animate-scale').forEach(el => observer.observe(el));
+            document.querySelectorAll(
+                '.viewport-animate, .viewport-animate-left, .viewport-animate-right, .viewport-animate-scale'
+            ).forEach(el => {
+                observer.unobserve(el);
+                observer.observe(el);
+            });
         }
 
         document.addEventListener('DOMContentLoaded', observeElements);
 
         function showPage(pageId) {
+            const current = document.querySelector('.page.active');
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
+            const next = document.getElementById(pageId);
+            next.classList.add('active');
+
+            if (current !== next) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
             setTimeout(observeElements, 100);
         }
 
@@ -1173,6 +1251,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => goToProject(0));
+        function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active')
+        ? 'hidden'
+        : '';
+}
+
+function closeMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.remove('active');
+    document.body.style.overflow = '';
     </script>
 </body>
 </html>
