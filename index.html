@@ -112,12 +112,11 @@
 
         .page {
             min-height: 100vh;
-            display: none;
+            display: block;
         }
 
-        .page.active {
-            display: block;
-            animation: pageEnter var(--transition-slow) ease;
+        .page:not(.active) {
+            display: none;
         }
 
         @keyframes pageEnter {
@@ -1011,6 +1010,15 @@
     .hamburger {
         display: block;
     }
+
+    .page {
+        display: block;
+        min-height: auto;
+    }
+
+    .page:not(.active) {
+        display: block;
+    }
 }
     </style>
 </head>
@@ -1263,6 +1271,7 @@ function closeMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.remove('active');
     document.body.style.overflow = '';
-    </script>
+}
+</script>
 </body>
 </html>
